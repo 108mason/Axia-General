@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/configuration-snippet: rewrite ^(/path_landing)$ $1/ permanent;    
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+  creationTimestamp: null
+  generation: 1
+  name: name_landing
+spec:
+  rules:
+  - host: q8landing.rogmax.com
+    http:
+      paths: 
+      - backend:
+          serviceName: name_landing
+          servicePort: 80
+        path: /path_landing(/|$)(.*)

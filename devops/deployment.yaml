@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: name_landing
+    env: staging
+  name: name_landing
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: name_landing
+      env: staging
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: name_landing
+        env: staging
+    spec:
+      containers:
+      - image: eu.gcr.io/organic-dryad-205612/q8trade/staging/landing/$CI_PROJECT_NAME
+        imagePullPolicy: Always
+        name: name_landing
+        resources: {}
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+
+
+
+
+
